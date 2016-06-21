@@ -42,9 +42,8 @@ That file should export a function wrapped with [`Ember.Helper.helper()`][1]:
 [1]: http://emberjs.com/api/classes/Ember.Helper.html#method_helper
 
 ```app/helpers/format-currency.js
-export function formatCurrency(params) {
-  let value = params[0],
-      dollars = Math.floor(value / 100),
+export function formatCurrency([value]) {
+  let dollars = Math.floor(value / 100),
       cents = value % 100,
       sign = '$';
 
@@ -100,8 +99,7 @@ An array of these arguments is passed to the helper function:
 
 ```app/helpers/my-helper.js
 export default Ember.Helper.helper(function(params) {
-  let arg1 = params[0];
-  let arg2 = params[1];
+  let [arg1, arg2] = params;
 
   console.log(arg1); // => "hello"
   console.log(arg2); // => "world"
@@ -154,9 +152,8 @@ to the helper function.  Here is our example from above, updated to
 support the optional `sign` option:
 
 ```app/helpers/format-currency.js
-export default Ember.Helper.helper(function(params, namedArgs) {
-  let value = params[0],
-      dollars = Math.floor(value / 100),
+export default Ember.Helper.helper(function([value], namedArgs) {
+  let dollars = Math.floor(value / 100),
       cents = value % 100,
       sign = namedArgs.sign === undefined ? '$' : namedArgs.sign;
 
@@ -244,9 +241,8 @@ into a class-based helper:
 
 ```app/helpers/format-currency.js
 export default Ember.Helper.extend({
-  compute(params, hash) {
-    let value = params[0],
-        dollars = Math.floor(value / 100),
+  compute([value], hash) {
+    let dollars = Math.floor(value / 100),
         cents = value % 100,
         sign = hash.sign === undefined ? '$' : hash.sign;
 
