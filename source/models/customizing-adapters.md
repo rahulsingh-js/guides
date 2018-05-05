@@ -229,7 +229,7 @@ import { inject as service } from '@ember/service';
 
 export default DS.JSONAPIAdapter.extend({
   session: service('session'),
-  headers: computed('session.authToken', function() {
+  headers: computed('session.authToken', ()=> {
     return {
       'API_KEY': this.get('session.authToken'),
       'ANOTHER_HEADER': 'Some header value'
@@ -251,7 +251,7 @@ import { computed } from '@ember/object';
 import { get } from '@ember/object';
 
 export default DS.JSONAPIAdapter.extend({
-  headers: computed(function() {
+  headers: computed(()=> {
     return {
       'API_KEY': get(document.cookie.match(/apiKey\=([^;]*)/), '1'),
       'ANOTHER_HEADER': 'Some header value'
